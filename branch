@@ -1,0 +1,27 @@
+
+<html>
+<head>
+    <title>Product Store</title>
+</head>
+<body>
+    <h1>Product Store</h1>
+    <ul>
+        {% for category in categories %}
+        <li>
+            <a href="/category/{{ category.id }}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for product in products %}
+        <li>
+            {{ product.name }} (₹{{ product.price }})
+            <form action="/buy" method="post">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <button type="submit">Buy Now</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,5 +1,31 @@
-<html>
-<head>
-<title>dragon mart</title>
-</head>
-<body>
+from flask import Flask, render_template, request
+app = Flask(__name__)
+# Sample products data
+products = [
+    {"id": 1, "name": "Product 1", "price": 100},
+    {"id": 2, "name": "Product 2", "price": 200},
+    {"id": 3, "name": "Product 3", "price": 300}
+]
+# Sample categories data
+categories = [
+    {"id": 1, "name": "Electronics"},
+    {"id": 2, "name": "Fashion"},
+    {"id": 3, "name": "Home"}
+]
+@app.route("/")
+def index():
+    return render_template("index.html", products=products, categories=categories)
+
+@app.route("/category/<int:category_id>")
+def category(category_id):
+    category_products = [product for product in products if product["id"] == category_id]
+    return render_template("category.html", products=category_products, category=categories[category_id-1])
+
+@app.route("/buy", methods=["POST"])
+def buy():
+    product_id = request.form["product_id"]
+    # Process payment and update inventory
+    return "Thank you for your purchase!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
